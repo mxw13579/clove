@@ -69,6 +69,10 @@ lerna-debug.log*
 .yarn/
 .pnp.*
 
+# Allow frontend package files
+!front/package.json
+!front/pnpm-lock.yaml
+
 # Frontend build outputs (will be built in Docker)
 front/dist/
 front/build/

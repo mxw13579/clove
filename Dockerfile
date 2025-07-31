@@ -9,10 +9,16 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app/front
 
 # Copy frontend package files
-COPY front/package.json front/pnpm-lock.yaml ./
+COPY front/package.json ./
+# Copy lock file if it exists
+COPY front/pnpm-lock.yaml* ./
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# Install dependencies (use --frozen-lockfile only if lock file exists)
+RUN if [ -f pnpm-lock.yaml ]; then \
+        pnpm install --frozen-lockfile; \
+    else \
+        pnpm install; \
+    fi
 
 # Copy frontend source
 COPY front/ ./
